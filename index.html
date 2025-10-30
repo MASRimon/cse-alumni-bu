@@ -16,7 +16,6 @@
             line-height: 1.6;
             overflow-x: hidden;
         }
-
         .bg-animation {
             position: fixed;
             top: 0; left: 0;
@@ -34,7 +33,6 @@
             animation: rotate 20s linear infinite;
         }
         @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
         .header {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
@@ -59,7 +57,7 @@
         }
         .header p { font-size: 1.1rem; opacity: 0.9; }
 
-        /* Navigation - desktop */
+        /* Navigation - desktop/mobile single source */
         nav {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
@@ -68,31 +66,9 @@
             top: 0;
             z-index: 100;
         }
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        nav li { margin: 0 0.3rem; }
-        nav a {
-            color: #E0E0E0;
-            text-decoration: none;
-            padding: 0.7rem 1.2rem;
-            border-radius: 25px;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: block;
-        }
-        nav a:hover {
-            background: linear-gradient(135deg, #00D4AA, #FF6B6B);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,212,170,0.3);
-        }
-
-        /* Hamburger for mobile nav */
-        .nav-toggle {
+        /* Hamburger controls */
+        #nav-toggle { display: none; }
+        .nav-hamburger {
             display: none;
             font-size: 2rem;
             color: #FFD93D;
@@ -106,12 +82,34 @@
             z-index: 1001;
         }
 
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .nav-menu li { margin: 0 0.3rem; }
+        .nav-menu a {
+            color: #E0E0E0;
+            text-decoration: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        .nav-menu a:hover {
+            background: linear-gradient(135deg, #00D4AA, #FF6B6B);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,212,170,0.3);
+        }
+
         /* Mobile nav overlay and animation */
         @media (max-width: 600px) {
-            nav ul { display: none; }
-            .nav-toggle { display: block; }
-            .nav-mobile {
-                display: flex;
+            nav { position: relative; }
+            .nav-hamburger { display: block; }
+            .nav-menu {
                 flex-direction: column;
                 background: rgba(22, 33, 62, 0.97);
                 position: fixed;
@@ -124,12 +122,15 @@
                 transform: translateY(-100%);
                 opacity: 0;
             }
-            .nav-mobile.show {
+            #nav-toggle:checked ~ nav .nav-menu {
                 transform: translateY(0);
                 opacity: 1;
             }
-            .nav-mobile li { margin: 1.2rem 0; }
-            .nav-mobile a {
+            #nav-toggle:checked ~ nav .nav-hamburger {
+                color: #FF6B6B;
+            }
+            .nav-menu li { margin: 1.2rem 0; }
+            .nav-menu a {
                 font-size: 1.3rem;
                 font-weight: 600;
                 padding: 1rem 0;
@@ -140,11 +141,10 @@
                 border-radius: 0;
                 transition: background 0.2s, color 0.2s;
             }
-            .nav-mobile a:hover {
+            .nav-menu a:hover {
                 background: linear-gradient(135deg, #00D4AA, #FF6B6B);
                 color: #fff;
             }
-            body.nav-open { overflow: hidden; }
         }
 
         /* Mobile header */
@@ -232,7 +232,7 @@
             .section h2 { font-size: 1.15rem; }
         }
 
-        /* Alumni Grid */
+        /* Alumni Grid (sample) */
         .alumni-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -303,119 +303,7 @@
             .view-all-btn { font-size: 1rem; padding: 0.8rem 1.2rem; max-width: 90vw; }
         }
 
-        /* Alumni Modal */
-        .alumni-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            overflow-y: auto;
-            animation: modalFade 0.3s ease-out;
-        }
-        @keyframes modalFade { from { opacity: 0; } to { opacity: 1; } }
-        .alumni-modal.show { display: block; }
-        .modal-header {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        .modal-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            color: #00D4AA;
-        }
-        .close-modal {
-            background: none;
-            border: none;
-            color: #E0E0E0;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        .close-modal:active, .close-modal:focus { outline: none; color: #FF6B6B; }
-        .close-modal:hover { color: #FF6B6B; }
-        .filter-bar {
-            padding: 1rem 1.5rem;
-            background: rgba(0,0,0,0.5);
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .search-input {
-            padding: 0.8rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-            color: #E0E0E0;
-            font-size: 1rem;
-            width: 230px; max-width: 70vw;
-        }
-        .filter-btn {
-            padding: 0.5rem 1.2rem;
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            background: transparent;
-            color: #E0E0E0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-        }
-        .filter-btn.active { background: #00D4AA; color: #000; }
-        .alumni-masonry {
-            column-count: 1;
-            column-gap: 1.2rem;
-            padding: 1.5rem;
-            max-width: 100vw;
-        }
-        .masonry-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 1.2rem 1rem;
-            margin-bottom: 1rem;
-            break-inside: avoid;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .masonry-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(0,212,170,0.2);
-            border-color: rgba(0,212,170,0.3);
-        }
-        .masonry-card .alumni-avatar { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 1rem; }
-        .masonry-card h4 { color: #E0E0E0; margin-bottom: 0.3rem; font-size: 1.05rem; }
-        .masonry-card .role { color: #B0B0B0; font-size: 0.95rem; margin-bottom: 0.5rem; }
-        .masonry-card a {
-            color: #00D4AA;
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-        .masonry-card a:hover { color: #FF6B6B; }
-        @media (max-width: 600px) {
-            .alumni-modal { padding: 0; }
-            .filter-bar { flex-direction: column; align-items: stretch; gap: 0.8rem; }
-            .search-input { font-size: 1.1rem; padding: 1rem; width: 95vw; margin: 0 auto; }
-            .filter-btn { font-size: 1.1rem; padding: 0.8rem; margin: 0.2rem 0; }
-            .alumni-masonry { column-count: 1; padding: 1.2rem 0.5rem; }
-            .masonry-card { padding: 1.4rem 0.7rem; border-radius: 18px; margin-bottom: 1.2rem; box-shadow: 0 2px 16px rgba(0,212,170,0.10); }
-            .masonry-card h4 { font-size: 1.1rem; }
-            .masonry-card .alumni-avatar { width: 70px; height: 70px; }
-            .modal-header { padding: 1rem 1rem; }
-        }
-
-        /* Mentorship and Contact Sections */
+        /* Mentorship and Contact Sections (samples) */
         .mentorship, .contact {
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
@@ -509,19 +397,16 @@
         @media (min-width: 768px) {
             .hero h2 { font-size: 3.2rem; }
             .alumni-grid { grid-template-columns: repeat(3,1fr); }
-            .alumni-masonry { column-count: 2; }
             .section { padding: 4rem 2rem; }
             .mentorship, .contact { padding: 3rem 2rem; }
         }
         @media (min-width: 1200px) {
-            .alumni-masonry { column-count: 3; }
+            .alumni-grid { grid-template-columns: repeat(4,1fr);}
         }
-        /* Make tap targets larger and add more spacing on smallest devices */
         @media (max-width: 400px) {
             .header h1 { font-size: 1.2rem; }
             .hero h2 { font-size: 1rem; }
             .section h2 { font-size: 1rem; }
-            .modal-title { font-size: 0.95rem; }
             .hero-btn, .view-all-btn, .submit-btn { font-size: 0.95rem; }
         }
     </style>
@@ -529,18 +414,14 @@
 <body>
     <div class="bg-animation"></div>
     <header class="header">
-        <button class="nav-toggle" id="navToggle" aria-label="Open navigation"><i class="fas fa-bars"></i></button>
         <h1><i class="fas fa-network-wired"></i> CSE Alumni Network</h1>
         <p>University of Barishal</p>
     </header>
+    <!-- Mobile Hamburger Toggle -->
+    <input type="checkbox" id="nav-toggle">
     <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#alumni">Alumni</a></li>
-            <li><a href="#mentorship">Mentorship</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <ul class="nav-mobile" id="navMobile">
+        <label for="nav-toggle" class="nav-hamburger"><i class="fas fa-bars"></i></label>
+        <ul class="nav-menu">
             <li><a href="#home">Home</a></li>
             <li><a href="#alumni">Alumni</a></li>
             <li><a href="#mentorship">Mentorship</a></li>
@@ -550,7 +431,7 @@
     <section id="home" class="hero">
         <h2>Code. Connect. Conquer.</h2>
         <p>Immerse yourself in a vibrant community of CSE alumni driving global innovation. Mentor, collaborate, and elevate your career— the future starts here.</p>
-        <button class="hero-btn" onclick="document.querySelector('#alumni').scrollIntoView({behavior: 'smooth'})">
+        <button class="hero-btn">
             <i class="fas fa-rocket"></i> Launch into Alumni
         </button>
     </section>
@@ -588,64 +469,15 @@
                 <p class="role">Lecturer in Computer Science & Engineering, Daffodil International University <br><small>(CSE '5th)</small></p>
             </div>
         </div>
-        <button class="view-all-btn" onclick="openAlumniModal()"><i class="fas fa-eye"></i> Explore Full Alumni</button>
+        <button class="view-all-btn"><i class="fas fa-eye"></i> Explore Full Alumni</button>
     </section>
-    <!-- Innovative Full Alumni Modal -->
-    <div id="alumniModal" class="alumni-modal" tabindex="-1">
-        <div class="modal-header">
-            <div class="modal-title"><i class="fas fa-users"></i> Alumni Galaxy</div>
-            <button class="close-modal" onclick="closeAlumniModal()" aria-label="Close">&times;</button>
-        </div>
-        <div class="filter-bar">
-            <input type="text" class="search-input" id="alumniSearch" placeholder="Search alumni by name or batch...">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="engineer">Engineers</button>
-            <button class="filter-btn" data-filter="lecturer">Lecturers</button>
-            <button class="filter-btn" data-filter="student">Students</button>
-        </div>
-        <div class="alumni-masonry" id="alumniMasonry">
-            <div class="masonry-card" data-category="manager">
-                <img src="anas.jpg" alt="A.B.M ANAS" class="alumni-avatar">
-                <h4>A.B.M ANAS</h4>
-                <p class="role">Human Resource Manager, IFIC Bank (CSE '2nd)</p>
-                <a href="https://www.facebook.com/exooticcsmaasher.anas/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
-            </div>
-            <div class="masonry-card" data-category="engineer">
-                <img src="shefat.jpg" alt="Abu Saem Shefatullah" class="alumni-avatar">
-                <h4>Abu Saem Shefatullah</h4>
-                <p class="role">Software Engineer, Google (CSE '3rd)</p>
-                <a href="https://www.facebook.com/abu.saem.shefatullah/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
-            </div>
-            <div class="masonry-card" data-category="student">
-                <img src="istiak ami.jpg" alt="Istiak Omi" class="alumni-avatar">
-                <h4>Istiak Omi</h4>
-                <p class="role">Graduate Teaching Assistant, University of Louisiana at Lafayette (CSE '4th)</p>
-                <a href="https://www.facebook.com/istiakjaman.omi.1/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
-            </div>
-            <div class="masonry-card" data-category="lecturer">
-                <img src="shovon.jpg" alt="Touhid Sovon" class="alumni-avatar">
-                <h4>Touhid Sovon</h4>
-                <p class="role">Lecturer, Daffodil International University (CSE '4th)</p>
-                <a href="https://www.facebook.com/sovont/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
-            </div>
-            <div class="masonry-card" data-category="lecturer">
-                <img src="moon.jpg" alt="Minhaj Ul Islam" class="alumni-avatar">
-                <h4>Minhaj Ul Islam</h4>
-                <p class="role">Lecturer, University of Global Village, Barishal (CSE '4th)</p>
-                <a href="https://www.facebook.com/shine.moon.583/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
-            </div>
-            <div class="masonry-card" data-category="lecturer">
-                <img src="juthi.jpg" alt="Nawshin Haque Juthi" class="alumni-avatar">
-                <h4>Nawshin Haque Juthi</h4>
-                <p class="role">Lecturer, Daffodil International University (CSE '5th)</p>
-                <a href="https://www.facebook.com/nawshin.juthi03/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
-            </div>
-        </div>
-    </div>
+
     <section id="mentorship" class="section mentorship">
         <h2><i class="fas fa-chalkboard-teacher"></i> Mentorship Galaxy</h2>
         <div class="form-group">
-            <p style="text-align: center; font-size: 1.1rem; color: #B0B0B0; max-width: 98vw; margin: 0 auto 2rem;">Sessions every Wednesday, 9:00 PM - 10:00 PM via Zoom. Register to mentor or learn from alumni.</p>
+            <p style="text-align: center; font-size: 1.1rem; color: #B0B0B0; max-width: 98vw; margin: 0 auto 2rem;">
+                Sessions every Wednesday, 9:00 PM - 10:00 PM via Zoom. Register to mentor or learn from alumni.
+            </p>
         </div>
         <form class="form-group" style="max-width: 98vw; margin: 0 auto;">
             <input type="text" placeholder="Full Name" required>
@@ -665,14 +497,16 @@
         <form class="form-group" style="max-width: 98vw; margin: 0 auto;">
             <input type="text" placeholder="Your Name" required>
             <input type="file" id="profileImg" accept="image/*" style="display: none;">
-            <label for="profileImg" class="file-upload-wrapper" style="display: block; padding: 1rem; border: 2px dashed #FFD93D; border-radius: 10px; text-align: center; cursor: pointer; background: rgba(255,255,255,0.02); margin-bottom:1rem;">
+            <label for="profileImg" class="file-upload-wrapper" style="display: block; padding: 1rem; border: 2px dashed #FFD93D; border-radius: 10px; text-align: center; cursor: pointer; background: rgba(255,255,255,0.05); margin-bottom: 1rem;">
                 <i class="fas fa-camera" style="font-size: 2rem; color: #FFD93D;"></i> Upload Profile Image
             </label>
             <input type="url" placeholder="Facebook Profile Link" required>
             <input type="text" placeholder="Grad Year (e.g., CSE '18)" required>
             <input type="text" placeholder="Current Role/Company" required>
             <input type="text" placeholder="Interests (e.g., mentorship, events)" required>
-            <label style="display: flex; align-items: center; font-size: 1rem; margin-bottom:0.5rem;"><input type="checkbox" style="margin-right:0.5rem;"> Add to Alumni Galaxy</label>
+            <label style="display: flex; align-items: center; font-size: 1rem; margin-bottom:0.5rem;">
+                <input type="checkbox" style="margin-right:0.5rem;"> Add to Alumni Galaxy
+            </label>
             <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Transmit Message</button>
         </form>
         <div class="contact-grid">
@@ -702,102 +536,5 @@
     <footer>
         <p>&copy; 2025 CSE Alumni Network - University of Barishal. <i class="fas fa-rocket"></i> To Infinity & Beyond!</p>
     </footer>
-    <script>
-        // Mobile nav toggle
-        const navToggle = document.getElementById('navToggle');
-        const navMobile = document.getElementById('navMobile');
-        let navOpen = false;
-        navToggle.addEventListener('click', function() {
-            navOpen = !navOpen;
-            if (navOpen) {
-                navMobile.classList.add('show');
-                document.body.classList.add('nav-open');
-            } else {
-                navMobile.classList.remove('show');
-                document.body.classList.remove('nav-open');
-            }
-        });
-        // Hide mobile nav on link click
-        navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-            navMobile.classList.remove('show');
-            document.body.classList.remove('nav-open');
-            navOpen = false;
-        }));
-
-        function openAlumniModal() {
-            document.getElementById('alumniModal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-            document.getElementById('alumniModal').focus();
-        }
-        function closeAlumniModal() {
-            document.getElementById('alumniModal').classList.remove('show');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Modal accessibility: close on Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeAlumniModal();
-        });
-
-        // Search and Filter Functionality
-        const searchInput = document.getElementById('alumniSearch');
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const masonryCards = document.querySelectorAll('.masonry-card');
-
-        searchInput.addEventListener('input', filterCards);
-        filterBtns.forEach(btn => btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            filterCards();
-        }));
-
-        function filterCards() {
-            const searchTerm = searchInput.value.toLowerCase();
-            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
-
-            masonryCards.forEach(card => {
-                const name = card.querySelector('h4').textContent.toLowerCase();
-                const role = card.querySelector('.role').textContent.toLowerCase();
-                const category = card.dataset.category;
-
-                const matchesSearch = name.includes(searchTerm) || role.includes(searchTerm);
-                const matchesFilter = activeFilter === 'all' || category === activeFilter;
-
-                if (matchesSearch && matchesFilter) {
-                    card.style.display = 'block';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    setTimeout(() => { card.style.display = 'none'; }, 200);
-                }
-            });
-        }
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Form submissions
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', e => {
-                e.preventDefault();
-                alert('Transmission received! Orbiting your request... 🌟');
-            });
-        });
-
-        // Close modal on outside click
-        document.getElementById('alumniModal').addEventListener('click', function(e) {
-            if (e.target === this) closeAlumniModal();
-        });
-    </script>
 </body>
 </html>
