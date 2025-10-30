@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE Alumni Network - University of Barishal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0C0C0C 0%, #1A1A2E 50%, #16213E 100%);
+            color: #E0E0E0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00D4AA, #FF6B6B, #FFD93D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 5px rgba(0, 212, 170, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav li {
+            margin: 0 1rem;
+        }
+
+        nav a {
+            color: #E0E0E0;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            background: linear-gradient(135deg, #00D4AA, #FF6B6B);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        /* Hero */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 5rem;
+            background: linear-gradient(135deg, #00D4AA, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #00D4AA, #FF6B6B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        /* Featured Alumni Grid */
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .alumni-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .alumni-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 170, 0.2);
+            border-color: rgba(0, 212, 170, 0.3);
+        }
+
+        .alumni-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+            border: 3px solid rgba(0, 212, 170, 0.3);
+            transition: border-color 0.3s ease;
+        }
+
+        .alumni-card:hover .alumni-avatar {
+            border-color: #00D4AA;
+        }
+
+        .alumni-card h3 {
+            color: #E0E0E0;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .alumni-card .role {
+            color: #B0B0B0;
+            font-style: italic;
+        }
+
+        /* View All Button */
+        .view-all-btn {
+            display: block;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #FFD93D, #FFEAA7);
+            color: #2D3436;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3);
+        }
+
+        .view-all-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 217, 61, 0.4);
+        }
+
+        /* Innovative View All Alumni: Full-Screen Masonry Grid with Filters */
+        .alumni-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            overflow-y: auto;
+            animation: modalFade 0.3s ease-out;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .alumni-modal.show {
+            display: block;
+        }
+
+        .modal-header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .modal-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            color: #00D4AA;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: #E0E0E0;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #FF6B6B;
+        }
+
+        .filter-bar {
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            padding: 0.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #E0E0E0;
+            font-size: 1rem;
+            width: 250px;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: transparent;
+            color: #E0E0E0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #00D4AA;
+            color: #000;
+        }
+
+        .alumni-masonry {
+            column-count: 1;
+            column-gap: 2rem;
+            padding: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .alumni-masonry { column-count: 2; }
+        }
+
+        @media (min-width: 1200px) {
+            .alumni-masonry { column-count: 3; }
+        }
+
+        .masonry-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            break-inside: avoid;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masonry-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.2);
+            border-color: rgba(0, 212, 170, 0.3);
+        }
+
+        .masonry-card .alumni-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .masonry-card h4 {
+            color: #E0E0E0;
+            margin-bottom: 0.3rem;
+        }
+
+        .masonry-card .role {
+            color: #B0B0B0;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .masonry-card a {
+            color: #00D4AA;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .masonry-card a:hover {
+            color: #FF6B6B;
+        }
+
+        /* Mentorship and Contact Sections - Simplified for Focus */
+        .mentorship, .contact {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #E0E0E0;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder {
+            color: #B0B0B0;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #00D4AA, #FF6B6B);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 212, 170, 0.3);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: #FFD93D;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item a {
+            color: #00D4AA;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 3rem; }
+            .alumni-grid { grid-template-columns: 1fr; }
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .search-input { width: 100%; }
+            .alumni-masonry { column-count: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header class="header">
+        <h1><i class="fas fa-network-wired"></i> CSE Alumni Network</h1>
+        <p>University of Barishal</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#alumni">Alumni</a></li>
+            <li><a href="#mentorship">Mentorship</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h2>Code. Connect. Conquer.</h2>
+        <p>Immerse yourself in a vibrant community of CSE alumni driving global innovation. Mentor, collaborate, and elevate your career— the future starts here.</p>
+        <button class="hero-btn" onclick="document.querySelector('#alumni').scrollIntoView({behavior: 'smooth'})">
+            <i class="fas fa-rocket"></i> Launch into Alumni
+        </button>
+    </section>
+
+    <section id="alumni" class="section">
+        <h2><i class="fas fa-star"></i> Featured Alumni</h2>
+        <div class="alumni-grid">
+            <div class="alumni-card">
+                <img src="anas.jpg" alt="A.B.M ANAS" class="alumni-avatar">
+                <h3>A.B.M ANAS</h3>
+                <p class="role">Human Resource Manager, IFIC Bank <br><small>(CSE '2nd)</small></p>
+            </div>
+            <div class="alumni-card">
+                <img src="shefat.jpg" alt="Abu Saem Shefatullah" class="alumni-avatar">
+                <h3>Abu Saem Shefatullah</h3>
+                <p class="role">Software Engineer, Google <br><small>(CSE '3rd)</small></p>
+            </div>
+            <div class="alumni-card">
+                <img src="istiak ami.jpg" alt="Istiak Omi" class="alumni-avatar">
+                <h3>Istiak Omi</h3>
+                <p class="role">Graduate Teaching Assistant, University of Louisiana at Lafayette <br><small>(CSE '4th)</small></p>
+            </div>
+            <div class="alumni-card">
+                <img src="shovon.jpg" alt="Touhid Sovon" class="alumni-avatar">
+                <h3>Touhid Sovon</h3>
+                <p class="role">Lecturer in Computer Science & Engineering, Daffodil International University <br><small>(CSE '4th)</small></p>
+            </div>
+            <div class="alumni-card">
+                <img src="moon.jpg" alt="Minhaj Ul Islam" class="alumni-avatar">
+                <h3>Minhaj Ul Islam</h3>
+                <p class="role">Lecturer in Computer Science & Engineering, University of Global Village, Barishal <br><small>(CSE '4th)</small></p>
+            </div>
+            <div class="alumni-card">
+                <img src="juthi.jpg" alt="Nawshin Haque Juthi" class="alumni-avatar">
+                <h3>Nawshin Haque Juthi</h3>
+                <p class="role">Lecturer in Computer Science & Engineering, Daffodil International University <br><small>(CSE '5th)</small></p>
+            </div>
+        </div>
+        <button class="view-all-btn" onclick="openAlumniModal()"><i class="fas fa-eye"></i> Explore Full Alumni</button>
+    </section>
+
+    <!-- Innovative Full Alumni Modal -->
+    <div id="alumniModal" class="alumni-modal">
+        <div class="modal-header">
+            <div class="modal-title"><i class="fas fa-users"></i> Alumni Galaxy</div>
+            <button class="close-modal" onclick="closeAlumniModal()">&times;</button>
+        </div>
+        <div class="filter-bar">
+            <input type="text" class="search-input" id="alumniSearch" placeholder="Search alumni by name or batch...">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="engineer">Engineers</button>
+            <button class="filter-btn" data-filter="lecturer">Lecturers</button>
+            <button class="filter-btn" data-filter="student">Students</button>
+        </div>
+        <div class="alumni-masonry" id="alumniMasonry">
+            <div class="masonry-card" data-category="manager">
+                <img src="anas.jpg" alt="A.B.M ANAS" class="alumni-avatar">
+                <h4>A.B.M ANAS</h4>
+                <p class="role">Human Resource Manager, IFIC Bank (CSE '2nd)</p>
+                <a href="https://www.facebook.com/exooticcsmaasher.anas/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
+            </div>
+            <div class="masonry-card" data-category="engineer">
+                <img src="shefat.jpg" alt="Abu Saem Shefatullah" class="alumni-avatar">
+                <h4>Abu Saem Shefatullah</h4>
+                <p class="role">Software Engineer, Google (CSE '3rd)</p>
+                <a href="https://www.facebook.com/abu.saem.shefatullah/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
+            </div>
+            <div class="masonry-card" data-category="student">
+                <img src="istiak ami.jpg" alt="Istiak Omi" class="alumni-avatar">
+                <h4>Istiak Omi</h4>
+                <p class="role">Graduate Teaching Assistant, University of Louisiana at Lafayette (CSE '4th)</p>
+                <a href="https://www.facebook.com/istiakjaman.omi.1/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
+            </div>
+            <div class="masonry-card" data-category="lecturer">
+                <img src="shovon.jpg" alt="Touhid Sovon" class="alumni-avatar">
+                <h4>Touhid Sovon</h4>
+                <p class="role">Lecturer, Daffodil International University (CSE '4th)</p>
+                <a href="https://www.facebook.com/sovont/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
+            </div>
+            <div class="masonry-card" data-category="lecturer">
+                <img src="moon.jpg" alt="Minhaj Ul Islam" class="alumni-avatar">
+                <h4>Minhaj Ul Islam</h4>
+                <p class="role">Lecturer, University of Global Village, Barishal (CSE '4th)</p>
+                <a href="https://www.facebook.com/shine.moon.583/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
+            </div>
+            <div class="masonry-card" data-category="lecturer">
+                <img src="juthi.jpg" alt="Nawshin Haque Juthi" class="alumni-avatar">
+                <h4>Nawshin Haque Juthi</h4>
+                <p class="role">Lecturer, Daffodil International University (CSE '5th)</p>
+                <a href="https://www.facebook.com/nawshin.juthi03/" target="_blank"><i class="fab fa-facebook"></i> Connect</a>
+            </div>
+        </div>
+    </div>
+
+    <section id="mentorship" class="section">
+        <h2><i class="fas fa-chalkboard-teacher"></i> Mentorship Galaxy</h2>
+        <div class="form-group">
+            <p style="text-align: center; font-size: 1.2rem; color: #B0B0B0; max-width: 800px; margin: 0 auto 2rem;">Sessions every Wednesday, 9:00 PM - 10:00 PM via Zoom. Register to mentor or learn from the stars of CSE.</p>
+        </div>
+        <form class="form-group" style="max-width: 600px; margin: 0 auto;">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <select required>
+                <option value="">Select Role</option>
+                <option value="student">Current Student</option>
+                <option value="alumni">Alumnus/Alumna</option>
+                <option value="mentor">Mentor Volunteer</option>
+            </select>
+            <input type="text" placeholder="Preferred Topic (e.g., AI, Web Dev)" required>
+            <button type="submit" class="submit-btn"><i class="fas fa-rocket"></i> Launch Session</button>
+        </form>
+    </section>
+
+    <section id="contact" class="section">
+        <h2><i class="fas fa-link"></i> Reconnect & Contribute</h2>
+        <form class="form-group" style="max-width: 600px; margin: 0 auto;">
+            <input type="text" placeholder="Your Name" required>
+            <input type="file" id="profileImg" accept="image/*" style="display: none;">
+            <label for="profileImg" class="file-upload-wrapper" style="display: block; padding: 1rem; border: 2px dashed #FFD93D; border-radius: 10px; text-align: center; cursor: pointer; background: rgba(255, 255, 255, 0.1);">
+                <i class="fas fa-camera" style="font-size: 2rem; color: #FFD93D;"></i> Upload Profile Image
+            </label>
+            <input type="url" placeholder="Facebook Profile Link" required>
+            <input type="text" placeholder="Grad Year (e.g., CSE '18)" required>
+            <input type="text" placeholder="Current Role/Company" required>
+            <input type="text" placeholder="Interests (e.g., mentorship, events)" required>
+            <label style="display: flex; align-items: center; font-size: 1rem;"><input type="checkbox"> Add to Alumni Galaxy</label>
+            <button type="submit" class="submit-btn"><i class="fas fa-paper-plane"></i> Transmit Message</button>
+        </form>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <h4>Email</h4>
+                <p><a href="mailto:alumni_cse@bu.ac.bd">alumni_cse@bu.ac.bd</a></p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <h4>Phone</h4>
+                <p><a href="tel:+8804312177771">+880-431-2177771</a></p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-share-alt"></i>
+                <h4>Social</h4>
+                <p><a href="https://www.linkedin.com/school/university-of-barishal-bd/" target="_blank">LinkedIn</a><br>
+                <a href="https://www.facebook.com/groups/311906208363371/" target="_blank">Facebook</a></p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h4>Location</h4>
+                <p>Academic Building, 5th Floor<br>University of Barishal, Bangladesh</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 CSE Alumni Network - University of Barishal. <i class="fas fa-rocket"></i> To Infinity & Beyond!</p>
+    </footer>
+
+    <script>
+        function openAlumniModal() {
+            document.getElementById('alumniModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAlumniModal() {
+            document.getElementById('alumniModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Search and Filter Functionality
+        const searchInput = document.getElementById('alumniSearch');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const masonryCards = document.querySelectorAll('.masonry-card');
+
+        searchInput.addEventListener('input', filterCards);
+        filterBtns.forEach(btn => btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filterCards();
+        }));
+
+        function filterCards() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+
+            masonryCards.forEach(card => {
+                const name = card.querySelector('h4').textContent.toLowerCase();
+                const role = card.querySelector('.role').textContent.toLowerCase();
+                const category = card.dataset.category;
+
+                const matchesSearch = name.includes(searchTerm) || role.includes(searchTerm);
+                const matchesFilter = activeFilter === 'all' || category === activeFilter;
+
+                if (matchesSearch && matchesFilter) {
+                    card.style.display = 'block';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => { card.style.display = 'none'; }, 300);
+                }
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Form submissions
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                alert('Transmission received! Orbiting your request... 🌟');
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('alumniModal').addEventListener('click', function(e) {
+            if (e.target === this) closeAlumniModal();
+        });
+    </script>
+</body>
+</html>
